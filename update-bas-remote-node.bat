@@ -1,0 +1,1 @@
+npm install github:Wizzzz/bas-remote-node-without-lock
