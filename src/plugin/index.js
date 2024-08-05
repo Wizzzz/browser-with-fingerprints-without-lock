@@ -1,9 +1,9 @@
-const mutex = require('./mutex');
 const cleaner = require('./cleaner');
 const launcher = require('./launcher');
 const { configure, synchronize } = require('./config');
 const { setup, fetch, versions, setEngineOptions } = require('./connector');
 const { defaultArgs, getProfilePath, validateConfig, validateLauncher } = require('./utils');
+const { Mutex, isActive } = require('@vscode/windows-mutex');
 
 module.exports = class FingerprintPlugin {
   static create(launcher) {
@@ -78,7 +78,8 @@ module.exports = class FingerprintPlugin {
 
     await cleaner.run(path).ignore(pid, id);
 
-    mutex.create(`BASProcess${pid}`);
+    const mutexName = `BASProcess${pid}`;
+    if (!isActive(mutexName)) new Mutex(mutexName);
 
     const browser = await (spawn ? launcher : options.launcher ?? this.launcher).launch({
       ...options,

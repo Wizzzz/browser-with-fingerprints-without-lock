@@ -58,6 +58,7 @@
     "win32"
   ],
   "dependencies": {
+    "@vscode/windows-mutex": "^0.5.0",
     "async-lock": "1.4.1",
     "bas-remote-node": "github:Wizzzz/bas-remote-node-without-lock",
     "chrome-remote-interface": "0.33.0",
